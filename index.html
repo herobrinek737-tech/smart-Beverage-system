@@ -1,64 +1,1426 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Beverage Station | Jugend forscht</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
-    <style>
-        body { padding-top: 2rem; }
-        .component-list li { margin-bottom: 0.5rem; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Beverage Station – Jugend forscht 2025/26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070D1A;
+  --bg2:#0B1525;
+  --bg3:#0F1D30;
+  --border:#192E46;
+  --border2:#24436A;
+  --blue:#00B8DC;
+  --blue-dim:#007EA0;
+  --orange:#FF7240;
+  --green:#00CC88;
+  --purple:#9B7FFF;
+  --text:#DDE8F2;
+  --muted:#5E7D98;
+  --muted2:#84A0B8;
+  --code-bg:#030A13;
+  --font-display:'Space Grotesk',sans-serif;
+  --font-body:'Inter',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.7;min-height:100vh}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:var(--font-mono);font-size:0.82em;background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:1px 6px;color:#A8D4F0}
+
+/* ── LAYOUT ── */
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:100vh;max-width:1300px;margin:0 auto}
+
+/* ── SIDEBAR ── */
+nav.sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;padding:2rem 1.25rem;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:0.25rem}
+.sidebar-logo{display:flex;align-items:center;gap:10px;padding:0 0 1.5rem;border-bottom:1px solid var(--border);margin-bottom:0.75rem}
+.sidebar-logo .logo-dot{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--blue),var(--blue-dim));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;font-family:var(--font-display);color:#fff;flex-shrink:0}
+.sidebar-logo span{font-family:var(--font-display);font-size:13px;font-weight:600;line-height:1.2;color:var(--text)}
+.sidebar-logo small{display:block;font-size:10px;color:var(--muted);font-weight:400;font-family:var(--font-body)}
+.nav-section{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:1rem 0.5rem 0.25rem}
+.nav-link{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;font-size:13px;color:var(--muted2);transition:all .15s;border:1px solid transparent;text-decoration:none}
+.nav-link:hover{color:var(--text);background:var(--bg3);border-color:var(--border)}
+.nav-link.active{color:var(--blue);background:rgba(0,184,220,.08);border-color:rgba(0,184,220,.2)}
+.nav-link .dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:0.5;flex-shrink:0}
+.nav-link.active .dot{opacity:1}
+.nav-badge{margin-left:auto;font-size:10px;padding:1px 6px;border-radius:10px;background:rgba(0,204,136,.12);color:var(--green);font-weight:500}
+
+/* ── MAIN ── */
+main{padding:3rem 3rem 6rem}
+
+/* ── HERO ── */
+.hero{padding:2.5rem 0 3rem;border-bottom:1px solid var(--border);margin-bottom:3rem}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);background:rgba(0,184,220,.08);border:1px solid rgba(0,184,220,.2);padding:4px 12px;border-radius:20px;margin-bottom:1.25rem}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+h1{font-family:var(--font-display);font-size:2.8rem;font-weight:700;line-height:1.1;letter-spacing:-.02em;color:#fff;margin-bottom:1rem}
+h1 .accent{color:var(--blue)}
+.hero-sub{font-size:1.05rem;color:var(--muted2);max-width:660px;line-height:1.6;margin-bottom:2rem}
+.hero-meta{display:flex;flex-wrap:wrap;gap:1rem}
+.meta-chip{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted2);background:var(--bg3);border:1px solid var(--border);padding:5px 12px;border-radius:20px}
+.meta-chip .icon{font-size:14px}
+
+/* ── SECTION HEADINGS ── */
+.section{margin-bottom:4rem;scroll-margin-top:2rem}
+h2{font-family:var(--font-display);font-size:1.5rem;font-weight:600;color:#fff;margin-bottom:0.5rem;letter-spacing:-.01em}
+h2 .sec-num{font-size:12px;color:var(--blue);font-weight:500;font-family:var(--font-body);margin-right:8px;font-variant-numeric:tabular-nums}
+.section-rule{height:1px;background:var(--border);margin-bottom:2rem}
+h3{font-family:var(--font-display);font-size:1.1rem;font-weight:600;color:#fff;margin:2rem 0 0.75rem}
+h4{font-size:0.9rem;font-weight:600;color:var(--muted2);text-transform:uppercase;letter-spacing:.06em;margin:1.5rem 0 0.5rem}
+p{color:var(--muted2);margin-bottom:0.9rem;max-width:72ch}
+
+/* ── CARDS ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1rem}
+.card-highlight{border-color:rgba(0,184,220,.25);background:linear-gradient(135deg,rgba(0,184,220,.04),var(--bg2))}
+.card-warning{border-color:rgba(255,114,64,.25);background:rgba(255,114,64,.04)}
+.card-success{border-color:rgba(0,204,136,.25);background:rgba(0,204,136,.04)}
+.card-title{font-family:var(--font-display);font-weight:600;font-size:0.95rem;margin-bottom:0.5rem;color:var(--text)}
+.card-body{font-size:13.5px;color:var(--muted2);line-height:1.65}
+.card-body ul{margin-left:1.2rem;margin-top:0.4rem}
+.card-body li{margin-bottom:0.2rem}
+
+/* ── ARCHITECTURE GRID ── */
+.arch-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.arch-node{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1.25rem;position:relative;overflow:hidden}
+.arch-node::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.arch-node.brain::before{background:var(--blue)}
+.arch-node.ctrl::before{background:var(--orange)}
+.arch-node.fluid::before{background:var(--green)}
+.arch-node.ui::before{background:var(--purple)}
+.arch-node-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem}
+.arch-node-title{font-family:var(--font-display);font-size:1rem;font-weight:600;color:#fff;margin-bottom:0.4rem}
+.arch-node-chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-right:4px;margin-top:4px;font-family:var(--font-mono)}
+.chip-blue{background:rgba(0,184,220,.12);color:var(--blue);border:1px solid rgba(0,184,220,.2)}
+.chip-orange{background:rgba(255,114,64,.12);color:var(--orange);border:1px solid rgba(255,114,64,.2)}
+.chip-green{background:rgba(0,204,136,.12);color:var(--green);border:1px solid rgba(0,204,136,.2)}
+.chip-purple{background:rgba(155,127,255,.12);color:var(--purple);border:1px solid rgba(155,127,255,.2)}
+.arch-flow{display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;background:var(--bg3);border:1px solid var(--border);border-radius:8px;margin-bottom:0.75rem;font-size:13px}
+.arch-flow .arrow{color:var(--blue);font-weight:600}
+
+/* ── COMPONENT TABLE ── */
+.bom-table{width:100%;border-collapse:collapse;font-size:13.5px}
+.bom-table th{text-align:left;padding:8px 12px;border-bottom:2px solid var(--border);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-family:var(--font-body)}
+.bom-table td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--muted2)}
+.bom-table tr:last-child td{border-bottom:none}
+.bom-table tr:hover td{background:rgba(255,255,255,.02)}
+.bom-table .part-name{font-weight:500;color:var(--text);font-size:13.5px}
+.bom-table .part-note{font-size:11.5px;color:var(--muted);display:block;margin-top:2px}
+.buy-btn{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;padding:4px 10px;border-radius:6px;background:rgba(0,184,220,.08);color:var(--blue);border:1px solid rgba(0,184,220,.2);text-decoration:none;font-weight:500;transition:all .15s;white-space:nowrap}
+.buy-btn:hover{background:rgba(0,184,220,.18);text-decoration:none}
+.cat-badge{font-size:10.5px;padding:2px 7px;border-radius:10px;font-weight:500;white-space:nowrap}
+
+/* ── CODE BLOCKS ── */
+.code-block{position:relative;margin:1.25rem 0;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+.code-header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--bg3);border-bottom:1px solid var(--border)}
+.code-filename{font-family:var(--font-mono);font-size:12px;color:var(--muted2)}
+.code-filename .ext{color:var(--green)}
+.code-actions{display:flex;gap:6px}
+.copy-btn{font-size:11px;padding:3px 10px;border-radius:5px;background:transparent;border:1px solid var(--border2);color:var(--muted2);cursor:pointer;font-family:var(--font-body);transition:all .15s}
+.copy-btn:hover{border-color:var(--blue);color:var(--blue)}
+.copy-btn.copied{border-color:var(--green);color:var(--green)}
+.code-block pre{margin:0;max-height:520px;overflow-y:auto}
+.code-block pre code{font-size:12.5px;line-height:1.65;font-family:var(--font-mono);border:none;background:none;padding:1.25rem;display:block}
+.hljs{background:var(--code-bg)!important}
+
+/* ── STEP LIST ── */
+.steps{counter-reset:step;margin:1rem 0}
+.step{display:flex;gap:1rem;margin-bottom:1.25rem;position:relative}
+.step::before{counter-increment:step;content:counter(step);width:28px;height:28px;border-radius:50%;background:rgba(0,184,220,.12);border:1px solid rgba(0,184,220,.25);color:var(--blue);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-family:var(--font-display)}
+.step-body{flex:1}
+.step-title{font-weight:600;color:var(--text);font-size:14px;margin-bottom:0.25rem}
+.step-desc{font-size:13px;color:var(--muted2);line-height:1.6}
+
+/* ── ALERT / CALLOUT ── */
+.callout{display:flex;gap:12px;padding:1rem 1.25rem;border-radius:8px;margin:1rem 0;font-size:13.5px;line-height:1.6}
+.callout-info{background:rgba(0,184,220,.07);border:1px solid rgba(0,184,220,.2);color:#A0CFE8}
+.callout-warn{background:rgba(255,114,64,.07);border:1px solid rgba(255,114,64,.2);color:#FFAA88}
+.callout-ok{background:rgba(0,204,136,.07);border:1px solid rgba(0,204,136,.2);color:#80D8B8}
+.callout-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.callout strong{color:inherit;font-weight:600}
+
+/* ── PIPELINE VISUAL ── */
+.pipeline{display:flex;align-items:stretch;gap:0;margin:1.5rem 0;overflow-x:auto;padding-bottom:0.5rem}
+.pipe-step{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;min-width:140px;flex:1;position:relative}
+.pipe-step::after{content:'→';position:absolute;right:-16px;top:50%;transform:translateY(-50%);color:var(--blue);font-weight:700;font-size:16px;z-index:1}
+.pipe-step:last-child::after{display:none}
+.pipe-num{font-size:10px;font-weight:700;color:var(--blue);font-family:var(--font-mono);margin-bottom:4px}
+.pipe-name{font-weight:600;font-size:13px;color:var(--text);margin-bottom:3px}
+.pipe-file{font-size:11px;color:var(--green);font-family:var(--font-mono)}
+
+/* ── GRID 3COL ── */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+
+/* ── SECURITY ── */
+.safety-list{list-style:none;padding:0}
+.safety-list li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--muted2)}
+.safety-list li:last-child{border-bottom:none}
+.safety-list .s-icon{width:20px;height:20px;border-radius:4px;background:rgba(255,114,64,.15);color:var(--orange);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:1px}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:1.5rem 0 0;margin-top:3rem;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--muted)}
+</style>
 </head>
 <body>
-    <main class="container">
-        <hgroup>
-            <h1>Smart Beverage Station</h1>
-            <h2>Jugend forscht Projekt Dokumentation</h2>
-        </hgroup>
 
-        <section>
-            <h3>Über das Projekt</h3>
-            <p>Ein DIY-Getränkeroboter, der Sensor-Fusion (Vision AI + Laser) und ein Custom X/Y-Gantry-System nutzt, um Flaschen automatisch mit gekühltem Wasser, Sprudel, Heißwasser oder Sirup zu befüllen.</p>
-        </section>
+<div class="layout">
 
-        <section>
-            <h3>Code & PDF-Generator</h3>
-            <p>Das Repository enthält ein Python-Skript (<code>generate_pdf.py</code>), welches die komplette Teileliste und Anleitung als PDF generiert. So führst du es lokal aus:</p>
-            <pre><code>pip install -r requirements.txt
-python generate_pdf.py</code></pre>
-        </section>
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-dot">SB</div>
+    <span>Smart Beverage Station<small>Jugend forscht 2025/26</small></span>
+  </div>
 
-        <section>
-            <h3>Komponentenliste</h3>
-            <ul class="component-list">
-                <li><b>Display:</b> <a href="https://eckstein-shop.de/... " target="_blank">WaveShare 7" QLED Touch</a></li>
-                <li><b>High-Level Brain:</b> <a href="https://www.berrybase.de/..." target="_blank">Raspberry Pi 5 Starterkit</a></li>
-                <li><b>Low-Level Controller:</b> <a href="https://www.az-delivery.de/..." target="_blank">ESP32 NodeMCU</a></li>
-                <li><b>Kinematik:</b> <a href="https://www.onbuy.com/..." target="_blank">NEMA17 Schrittmotoren</a> & <a href="https://www.roboter-bausatz.de/..." target="_blank">TMC2209 Treiber</a></li>
-                <li><b>Sensorik:</b> <a href="https://www.berrybase.de/..." target="_blank">Kamera Modul 3</a> & <a href="https://www.amazon.de/..." target="_blank">VL53L0X Laser</a></li>
-                <li><b>Fluidik:</b> <a href="https://www.braupartner.de/..." target="_blank">NC Keg</a>, <a href="https://www.amazon.de/..." target="_blank">Peristaltikpumpe</a>, etc.</li>
-            </ul>
-        </section>
+  <span class="nav-section">Übersicht</span>
+  <a href="#overview" class="nav-link active"><span class="dot"></span>Projektübersicht</a>
+  <a href="#architecture" class="nav-link"><span class="dot"></span>Systemarchitektur</a>
+  <a href="#bom" class="nav-link"><span class="dot"></span>Stückliste</a>
 
-        <section>
-            <h3>Schritt-für-Schritt-Anleitung</h3>
-            <ol>
-                <li>Rahmen aus V-Slot-Profilen bauen.</li>
-                <li>Rollen, Riemen und Motoren montieren.</li>
-                <li>TMC2209 und ESP32 verdrahten.</li>
-                <li>Raspberry Pi und Display einrichten.</li>
-                <li>Kamera montieren und kalibrieren.</li>
-                <li>VL53L0X in den Werkzeugkopf einbauen.</li>
-                <li>Relais und Netzteile anschließen.</li>
-                <li>Kaltwasser- & Sprudelsystem aufbauen.</li>
-                <li>Heißwasser- & Sirupsystem integrieren.</li>
-                <li>ESP32 (C++) programmieren.</li>
-                <li>Raspberry-Pi-Software (Python) entwickeln.</li>
-                <li>YOLOv8 trainieren.</li>
-                <li>Sensor-Fusion testen & System kalibrieren.</li>
-            </ol>
-        </section>
-    </main>
+  <span class="nav-section">Software – KI</span>
+  <a href="#pipeline" class="nav-link"><span class="dot"></span>Pipeline-Überblick</a>
+  <a href="#install" class="nav-link"><span class="dot"></span>Installation</a>
+  <a href="#collect" class="nav-link"><span class="dot"></span>01 Daten sammeln</a>
+  <a href="#prepare" class="nav-link"><span class="dot"></span>02 Dataset prep.</a>
+  <a href="#train" class="nav-link"><span class="dot"></span>03 Training</a>
+  <a href="#export" class="nav-link"><span class="dot"></span>04 Export</a>
+  <a href="#inference" class="nav-link"><span class="dot"></span>05 Inferenz</a>
+
+  <span class="nav-section">Hardware</span>
+  <a href="#gantry" class="nav-link"><span class="dot"></span>X/Y-Gantry</a>
+  <a href="#fluidik" class="nav-link"><span class="dot"></span>Fluidik-System</a>
+  <a href="#safety" class="nav-link"><span class="dot"></span>Sicherheit<span class="nav-badge">!</span></a>
+
+  <span class="nav-section">ESP32</span>
+  <a href="#esp32" class="nav-link"><span class="dot"></span>Firmware-Grundgerüst</a>
+</nav>
+
+<!-- ── MAIN ── -->
+<main>
+
+  <!-- HERO -->
+  <div class="hero" id="overview">
+    <div class="hero-eyebrow">🏆 Jugend forscht 2025/26 · CBG Dülmen</div>
+    <h1>Smart <span class="accent">Beverage</span><br>Station</h1>
+    <p class="hero-sub">Ein vollautonomer Getränkeroboter mit Vision-KI und X/Y-Gantry. Sensor-Fusion aus YOLOv8-Flaschenerkennung und VL53L0X-Lasersensor steuert 4 Getränkepfade: Kaltwasser, Sprudel, Heißwasser und Sirup – voll automatisiert.</p>
+    <div class="hero-meta">
+      <span class="meta-chip"><span class="icon">🧠</span> Raspberry Pi 5 · YOLOv8n</span>
+      <span class="meta-chip"><span class="icon">⚙️</span> ESP32 · G-Code · TMC2209</span>
+      <span class="meta-chip"><span class="icon">📷</span> Pi Camera 3 · 12 MP</span>
+      <span class="meta-chip"><span class="icon">🔬</span> STEM · Maker · DIY</span>
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <section class="section" id="architecture">
+    <h2><span class="sec-num">01</span>Systemarchitektur</h2>
+    <div class="section-rule"></div>
+
+    <div class="arch-grid">
+      <div class="arch-node brain">
+        <div class="arch-node-label">High-Level Brain</div>
+        <div class="arch-node-title">🧠 Raspberry Pi 5</div>
+        <p style="font-size:13px;color:var(--muted2);margin-bottom:0.75rem">Linux · Python 3.12 · Touch-Web-UI</p>
+        <span class="arch-node-chip chip-blue">YOLOv8n</span>
+        <span class="arch-node-chip chip-blue">picamera2</span>
+        <span class="arch-node-chip chip-blue">FastAPI</span>
+        <span class="arch-node-chip chip-blue">pyserial</span>
+      </div>
+      <div class="arch-node ctrl">
+        <div class="arch-node-label">Low-Level Controller</div>
+        <div class="arch-node-title">⚙️ ESP32 NodeMCU</div>
+        <p style="font-size:13px;color:var(--muted2);margin-bottom:0.75rem">Arduino/C++ · G-Code-Parser</p>
+        <span class="arch-node-chip chip-orange">AccelStepper</span>
+        <span class="arch-node-chip chip-orange">TMC2209 UART</span>
+        <span class="arch-node-chip chip-orange">StallGuard</span>
+        <span class="arch-node-chip chip-orange">VL53L0X</span>
+      </div>
+      <div class="arch-node fluid">
+        <div class="arch-node-label">Fluidik</div>
+        <div class="arch-node-title">💧 4-Kanal-Befüllung</div>
+        <p style="font-size:13px;color:var(--muted2);margin-bottom:0.75rem">8-Kanal-Relais · 5 V Logik</p>
+        <span class="arch-node-chip chip-green">Kaltwasser</span>
+        <span class="arch-node-chip chip-green">Sprudel</span>
+        <span class="arch-node-chip chip-green">Heißwasser</span>
+        <span class="arch-node-chip chip-green">Sirup</span>
+      </div>
+      <div class="arch-node ui">
+        <div class="arch-node-label">User Interface</div>
+        <div class="arch-node-title">🖥️ 7″ Touch-Display</div>
+        <p style="font-size:13px;color:var(--muted2);margin-bottom:0.75rem">WaveShare QLED · 1024×600</p>
+        <span class="arch-node-chip chip-purple">Live-Preview</span>
+        <span class="arch-node-chip chip-purple">Getränkewahl</span>
+        <span class="arch-node-chip chip-purple">Volumen</span>
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem">
+      <h4>Datenfluss</h4>
+      <div class="arch-flow"><span>📷 Pi Camera 3</span><span class="arrow">→</span><span>YOLOv8 Inferenz (Pi 5)</span><span class="arrow">→</span><span>px→mm Umrechnung</span><span class="arrow">→</span><span>G-Code Serial (USB)</span><span class="arrow">→</span><span>ESP32 Bewegung</span><span class="arrow">→</span><span>Relais öffnet Ventil</span></div>
+      <div class="arch-flow"><span>VL53L0X am Toolhead</span><span class="arrow">→</span><span>50 Hz Messung</span><span class="arrow">→</span><span>Hardware-Interrupt</span><span class="arrow">→</span><span>Notstopp aller Relais</span></div>
+    </div>
+  </section>
+
+  <!-- BOM -->
+  <section class="section" id="bom">
+    <h2><span class="sec-num">02</span>Stückliste (BOM)</h2>
+    <div class="section-rule"></div>
+
+    <div class="callout callout-info">
+      <span class="callout-icon">ℹ️</span>
+      <div>Alle Links führen zu den tatsächlich verwendeten Bauteilen. Preise können variieren.</div>
+    </div>
+
+    <div class="card" style="margin-top:1rem;overflow-x:auto">
+      <table class="bom-table">
+        <thead>
+          <tr>
+            <th>Komponente</th>
+            <th>Kategorie</th>
+            <th>Preis ca.</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="part-name">Raspberry Pi 5 Starter-Kit (4 GB)</span><span class="part-note">inkl. 64 GB SD, Gehäuse, Netzteil, HDMI</span></td>
+            <td><span class="cat-badge chip-blue">Brain</span></td>
+            <td>~85 €</td>
+            <td><a class="buy-btn" href="https://www.berrybase.de/raspberry-pi-5-starterkit-64gb-microsdhc-inkl.-pi-os-gehaeuse-netzteil-hdmi-kabel-und-zubehoer/farbe-schwarz/ram-4gb" target="_blank">BerryBase ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">WaveShare 7″ QLED Touch-Display</span><span class="part-note">1024×600, HDMI+USB Touch, für Pi</span></td>
+            <td><span class="cat-badge chip-purple">UI</span></td>
+            <td>~60 €</td>
+            <td><a class="buy-btn" href="https://eckstein-shop.de/WaveShare-7inch-QLED-Touch-Display-1024x600-with-Accessories-for-Raspberry-Pi-Jetson-Nano-PC" target="_blank">Eckstein ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">ESP32 NodeMCU (CP2102, USB-C)</span><span class="part-note">WROOM-32, Arduino-kompatibel</span></td>
+            <td><span class="cat-badge chip-orange">Controller</span></td>
+            <td>~8 €</td>
+            <td><a class="buy-btn" href="https://www.az-delivery.de/en/products/esp32-nodemcu-module-wlan-wifi-dev-kit-c-development-board-mit-cp2102-und-usb-c-anschluss-esp-32-esp32-wroom-32-kompatibel-mit-arduino" target="_blank">AZ-Delivery ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">Raspberry Pi Camera Module 3</span><span class="part-note">12 MP, Autofokus, HDR</span></td>
+            <td><span class="cat-badge chip-blue">Sensor</span></td>
+            <td>~25 €</td>
+            <td><a class="buy-btn" href="https://www.berrybase.de/raspberry-pi-camera-module-3-12mp" target="_blank">BerryBase ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">NEMA 17 Schrittmotor × 2</span><span class="part-note">42-Hybrid, 0,9°/Step, 40 mm</span></td>
+            <td><span class="cat-badge chip-orange">Mechanik</span></td>
+            <td>~18 €</td>
+            <td><a class="buy-btn" href="https://www.onbuy.com/de/p/2x-nema-17-42-hybrid-schrittmotor-09-grad-40-mm-168-ein-2-phasen-schrittmotor-fur-cnc-fraser~p245237548/" target="_blank">OnBuy ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">BigTreeTech TMC2209 v1.3 × 2</span><span class="part-note">UART-Treiber, StallGuard2, sensorless Homing</span></td>
+            <td><span class="cat-badge chip-orange">Controller</span></td>
+            <td>~14 €</td>
+            <td><a class="buy-btn" href="https://www.roboter-bausatz.de/p/bigtreetech-tmc2209-v1.3-schrittmotortreiber-uart" target="_blank">Roboter-Bausatz ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">VL53L0X ToF Laser-Sensor</span><span class="part-note">Reichweite 2 m, I²C, 50 Hz</span></td>
+            <td><span class="cat-badge chip-blue">Sensor</span></td>
+            <td>~6 €</td>
+            <td><a class="buy-btn" href="https://www.amazon.de/AZDelivery-VL53L0X-Flight-Ranging-Sensor/dp/B086V37JJ7" target="_blank">Amazon ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">8-Kanal 5 V Relais-Modul</span><span class="part-note">AZDelivery, Optokoppler-Isolation</span></td>
+            <td><span class="cat-badge chip-green">Fluidik</span></td>
+            <td>~9 €</td>
+            <td><a class="buy-btn" href="https://www.amazon.de/AZDelivery-8-Relais-Modul-Parent/dp/B07CT7SLYQ" target="_blank">Amazon ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">V-Slot Aluminium-Profile</span><span class="part-note">Europäisches 2020-Extrusion, Linearschiene</span></td>
+            <td><span class="cat-badge chip-orange">Mechanik</span></td>
+            <td>~22 €</td>
+            <td><a class="buy-btn" href="https://www.amazon.de/iYueMps-Extrusions-Europ%C3%A4ischer-Linearschiene-CNC-Maschine/dp/B0FG2RGZNH" target="_blank">Amazon ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">GT2 Zahnriemen + Rollen</span><span class="part-note">3D-Drucker-Qualität, inkl. Spanner</span></td>
+            <td><span class="cat-badge chip-orange">Mechanik</span></td>
+            <td>~12 €</td>
+            <td><a class="buy-btn" href="https://www.amazon.de/Official-Spacing-Sleeves-Creality-Anycubic/dp/B0F37SFZ6Q" target="_blank">Amazon ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">Dual V-Slot Führungsrollen</span><span class="part-note">Für lineares Gantry-System</span></td>
+            <td><span class="cat-badge chip-orange">Mechanik</span></td>
+            <td>~8 €</td>
+            <td><a class="buy-btn" href="https://www.roboter-bausatz.de/p/dual-v-slot-fuehrungsrolle" target="_blank">Roboter-Bausatz ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">VEVOR 12 V Membranpumpe</span><span class="part-note">Hochdruck, selbstansaugend, Druckschalter</span></td>
+            <td><span class="cat-badge chip-green">Fluidik</span></td>
+            <td>~35 €</td>
+            <td><a class="buy-btn" href="https://www.amazon.de/VEVOR-Wassermembranpumpe-einstellbar-selbstansaugende-Druckschalter/dp/B0DZ615G3G" target="_blank">Amazon ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">Peristaltikpumpe 12 V (Sirup)</span><span class="part-note">Selbstansaugend, Silikon-Schlauch</span></td>
+            <td><span class="cat-badge chip-green">Fluidik</span></td>
+            <td>~18 €</td>
+            <td><a class="buy-btn" href="https://www.amazon.de/CONQUERALL-Peristaltikpumpe-Selbstansaugend-Tinten-Probenentnahme-Silikonschlauch/dp/B0GHMPG7BP" target="_blank">Amazon ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">CASO HW 660 Heißwasserspender</span><span class="part-note">2600 W, gehackt via Taster-Überbrückung</span></td>
+            <td><span class="cat-badge chip-green">Fluidik</span></td>
+            <td>~50 €</td>
+            <td><a class="buy-btn" href="https://www.amazon.de/CASO-Turbo-Heißwasserspender-HW660-2600/dp/B0886SSPYB" target="_blank">Amazon ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">NC-Keg 19 L (Sprudel-Tank)</span><span class="part-note">Edelstahl, Ball-Lock, für CO₂</span></td>
+            <td><span class="cat-badge chip-green">Fluidik</span></td>
+            <td>~45 €</td>
+            <td><a class="buy-btn" href="https://www.braupartner.de/nc-keg-19-liter-neu" target="_blank">Braupartner ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">Mini-Kühlschrank (Kaltwasser)</span><span class="part-note">AliExpress, Peltier-basiert</span></td>
+            <td><span class="cat-badge chip-green">Fluidik</span></td>
+            <td>~106 €</td>
+            <td><a class="buy-btn" href="https://de.aliexpress.com/item/1005010520400398.html" target="_blank">AliExpress ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">Magnetventil 220 V, ½″ G</span><span class="part-note">Messing, DN15, QWORK</span></td>
+            <td><span class="cat-badge chip-green">Fluidik</span></td>
+            <td>~12 €</td>
+            <td><a class="buy-btn" href="https://www.amazon.de/QWORK-Magnetventil-220V-Messing-Wasser/dp/B0BRCPP7ZZ" target="_blank">Amazon ↗</a></td>
+          </tr>
+          <tr>
+            <td><span class="part-name">12 V / 10 A Netzteil</span><span class="part-note">Für Pumpen, Stepper, Relais</span></td>
+            <td><span class="cat-badge chip-orange">Power</span></td>
+            <td>~15 €</td>
+            <td><a class="buy-btn" href="https://www.sprintis.de/POS-Material/Werberahmen/Klapprahmen/LED-Klapprahmen/Netzteil-fuer-LED-Klapprahmen.html" target="_blank">Sprintis ↗</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- KI PIPELINE OVERVIEW -->
+  <section class="section" id="pipeline">
+    <h2><span class="sec-num">03</span>KI-Trainingspipeline: Überblick</h2>
+    <div class="section-rule"></div>
+
+    <p>Das Herzstück der Smart Beverage Station ist ein schlankes <strong>YOLOv8n</strong>-Modell, das in Echtzeit Flaschenöffnungen auf dem Raspberry Pi erkennt. Die Pipeline besteht aus 5 Python-Modulen.</p>
+
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">01</div><div class="pipe-name">Daten sammeln</div><div class="pipe-file">collect_data.py</div></div>
+      <div class="pipe-step"><div class="pipe-num">02</div><div class="pipe-name">Dataset prep.</div><div class="pipe-file">prepare_dataset.py</div></div>
+      <div class="pipe-step"><div class="pipe-num">03</div><div class="pipe-name">Training</div><div class="pipe-file">train.py</div></div>
+      <div class="pipe-step"><div class="pipe-num">04</div><div class="pipe-name">Export → Pi</div><div class="pipe-file">export.py</div></div>
+      <div class="pipe-step"><div class="pipe-num">05</div><div class="pipe-name">Live-Inferenz</div><div class="pipe-file">inference.py</div></div>
+    </div>
+
+    <div class="callout callout-warn">
+      <span class="callout-icon">⚠️</span>
+      <div><strong>Wichtig:</strong> Training (Schritt 3) läuft auf einem PC mit GPU (RTX 4060 ✓). Nur das fertige Modell (.ncnn) wird auf den Pi übertragen. Der Pi macht nur Inferenz!</div>
+    </div>
+  </section>
+
+  <!-- INSTALLATION -->
+  <section class="section" id="install">
+    <h2><span class="sec-num">04</span>Installation &amp; Setup</h2>
+    <div class="section-rule"></div>
+
+    <h3>Raspberry Pi 5 – Kamera &amp; Python-Umgebung</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-filename">bash – Pi 5</span><div class="code-actions"><button class="copy-btn" onclick="copyCode(this)">Kopieren</button></div></div>
+      <pre><code class="language-bash">
+# Raspberry Pi OS Bookworm (64-bit) vorausgesetzt
+# System aktualisieren
+sudo apt update && sudo apt upgrade -y
+
+# Picamera2 + System-Abhängigkeiten
+sudo apt install -y python3-picamera2 python3-pip python3-venv \
+    libatlas-base-dev libopenblas-dev libjpeg-dev libopencv-dev
+
+# Python-Venv anlegen
+python3 -m venv ~/sbs-env --system-site-packages
+source ~/sbs-env/bin/activate
+
+# Ultralytics (YOLOv8) für Inferenz installieren
+pip install ultralytics pyserial fastapi uvicorn
+
+# Kamera-Test
+python3 -c "from picamera2 import Picamera2; c=Picamera2(); c.start(); print('OK'); c.stop()"
+      </code></pre>
+    </div>
+
+    <h3>PC (Windows/Linux) – Training mit GPU</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-filename">bash – PC mit NVIDIA GPU</span><div class="code-actions"><button class="copy-btn" onclick="copyCode(this)">Kopieren</button></div></div>
+      <pre><code class="language-bash">
+# Python 3.10+ empfohlen, CUDA 12.x installiert
+python -m venv sbs-train
+# Windows:
+sbs-train\Scripts\activate
+# Linux/Mac:
+source sbs-train/bin/activate
+
+# PyTorch mit CUDA (für RTX 4060 - CUDA 12.x)
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+
+# Ultralytics YOLOv8 + Labeling-Tool
+pip install ultralytics
+
+# Optional: Label-Tool (empfohlen: Roboflow oder LabelImg)
+# pip install labelImg     ← klassisch, lokal
+# Oder Online: https://roboflow.com  ← empfohlen!
+      </code></pre>
+    </div>
+
+    <h3>Projekt-Ordnerstruktur</h3>
+    <div class="code-block">
+      <div class="code-header"><span class="code-filename">Verzeichnisstruktur</span><div class="code-actions"><button class="copy-btn" onclick="copyCode(this)">Kopieren</button></div></div>
+      <pre><code class="language-bash">
+smart-beverage-station/
+├── ai/                         # Alles KI-bezogene
+│   ├── 01_collect_data.py
+│   ├── 02_prepare_dataset.py
+│   ├── 03_train.py
+│   ├── 04_export.py
+│   ├── 05_inference.py
+│   ├── data/
+│   │   └── raw/                # Rohdaten (Bilder + .txt Labels)
+│   ├── datasets/
+│   │   └── bottles/            # Aufbereitetes YOLO-Dataset
+│   │       ├── data.yaml
+│   │       ├── train/{images,labels}/
+│   │       ├── val/{images,labels}/
+│   │       └── test/{images,labels}/
+│   ├── runs/train/             # Trainings-Outputs (Checkpoints, Plots)
+│   └── models/                 # Exportierte Modelle für den Pi
+│       └── bottle_ncnn_model/  # ← Diesen Ordner auf den Pi kopieren
+├── esp32/
+│   └── firmware/               # Arduino/C++ Quellcode
+└── docs/                       # Diese Doku
+      </code></pre>
+    </div>
+  </section>
+
+  <!-- COLLECT DATA -->
+  <section class="section" id="collect">
+    <h2><span class="sec-num">05</span>Modul 01 – Trainingsdaten sammeln</h2>
+    <div class="section-rule"></div>
+
+    <p>Dieses Skript nutzt die Pi Camera 3, um Fotos von Flaschen aus der Maschinenperspektive aufzunehmen. Ziel: <strong>mindestens 300–500 Bilder</strong> in verschiedenen Lichtverhältnissen und mit verschiedenen Flaschen.</p>
+
+    <div class="grid-3">
+      <div class="card"><div class="card-title">📸 Empfohlene Vielfalt</div><div class="card-body"><ul><li>Verschiedene Flaschentypen</li><li>Verschiedene Füllstände</li><li>3+ Lichtverhältnisse</li><li>Leicht versetzt stellen</li></ul></div></div>
+      <div class="card"><div class="card-title">🏷️ Labeling-Tool</div><div class="card-body"><ul><li><a href="https://roboflow.com" target="_blank">Roboflow</a> (empfohlen)</li><li>Klasse: <code>bottle_opening</code></li><li>Format: YOLOv8 (.txt)</li><li>Export: YOLO-Ordner</li></ul></div></div>
+      <div class="card"><div class="card-title">💡 Maker-Hack</div><div class="card-body"><ul><li>Gantry in Nullposition fahren</li><li>Kamera-Feed live nutzen</li><li>Delay 0,5 s genügt</li><li>~10 min für 300 Bilder</li></ul></div></div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-filename">ai/<span class="ext">01_collect_data.py</span></span>
+        <div class="code-actions"><button class="copy-btn" onclick="copyCode(this)">Kopieren</button></div>
+      </div>
+      <pre><code class="language-python">
+#!/usr/bin/env python3
+"""
+Smart Beverage Station — Schritt 1: Trainingsdaten sammeln
+Nimmt Fotos via Pi Camera 3 auf und speichert sie für das spätere Labeling.
+Läuft direkt auf dem Raspberry Pi 5.
+"""
+import os
+import time
+import argparse
+from datetime import datetime
+from picamera2 import Picamera2
+
+
+def collect_images(output_dir: str, n_images: int, delay: float = 0.5) -> None:
+    """Nimmt `n_images` Bilder mit der Pi Camera auf und speichert sie in `output_dir`."""
+    os.makedirs(output_dir, exist_ok=True)
+
+    cam = Picamera2()
+    config = cam.create_still_configuration(
+        main={"size": (1280, 720), "format": "RGB888"},
+        controls={"AwbEnable": True, "AeEnable": True},   # Auto-WB + Auto-Expo
+    )
+    cam.configure(config)
+    cam.start()
+    time.sleep(2.0)  # Kamera-Warmup (wichtig für korrekte Belichtung!)
+
+    print(f"[INFO] Starte Aufnahme von {n_images} Bildern → '{output_dir}'")
+    print("       Stelle die Flasche jetzt unter den Füllkopf.\n")
+
+    saved = 0
+    for i in range(n_images):
+        ts       = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+        filename = os.path.join(output_dir, f"bottle_{ts}.jpg")
+        cam.capture_file(filename)
+        saved   += 1
+        print(f"  [{saved:04d}/{n_images}]  → {filename}")
+        time.sleep(delay)
+
+    cam.stop()
+    print(f"\n✓  {saved} Bilder gespeichert in: {output_dir}")
+    print(f"   Nächster Schritt: Bilder mit Roboflow labeln!")
+    print(f"   → https://roboflow.com")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Trainingsdaten für YOLOv8 sammeln")
+    parser.add_argument("--out",   type=str,   default="data/raw",
+                        help="Ausgabeordner für Bilder (default: data/raw)")
+    parser.add_argument("--n",     type=int,   default=300,
+                        help="Anzahl aufzunehmender Bilder (default: 300)")
+    parser.add_argument("--delay", type=float, default=0.5,
+                        help="Pause zwischen Aufnahmen in Sekunden (default: 0.5)")
+    args = parser.parse_args()
+
+    collect_images(args.out, args.n, args.delay)
+      </code></pre>
+    </div>
+
+    <div class="callout callout-ok">
+      <span class="callout-icon">✅</span>
+      <div><strong>Nach dem Sammeln:</strong> Lade die Bilder bei <a href="https://roboflow.com" target="_blank">Roboflow.com</a> hoch. Neue Klasse <code>bottle_opening</code> anlegen, Bounding Boxes um die Flaschenöffnungen zeichnen und als <strong>YOLOv8 Format</strong> exportieren.</div>
+    </div>
+  </section>
+
+  <!-- PREPARE DATASET -->
+  <section class="section" id="prepare">
+    <h2><span class="sec-num">06</span>Modul 02 – Dataset vorbereiten</h2>
+    <div class="section-rule"></div>
+
+    <p>Dieses Skript teilt die gelabelten Rohdaten automatisch in <strong>Train / Val / Test</strong> auf (70 / 20 / 10 %) und erstellt die für YOLOv8 nötige <code>data.yaml</code>.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-filename">ai/<span class="ext">02_prepare_dataset.py</span></span>
+        <div class="code-actions"><button class="copy-btn" onclick="copyCode(this)">Kopieren</button></div>
+      </div>
+      <pre><code class="language-python">
+#!/usr/bin/env python3
+"""
+Smart Beverage Station — Schritt 2: Dataset für YOLOv8 vorbereiten
+Erwartet: data/raw/*.jpg  +  data/raw/*.txt  (YOLO-Labels aus Roboflow/LabelImg)
+
+Erstellt:
+  datasets/bottles/
+    ├── data.yaml
+    ├── train/{images,labels}/
+    ├── val/{images,labels}/
+    └── test/{images,labels}/
+"""
+import os
+import shutil
+import random
+from pathlib import Path
+
+
+# ─── Konfiguration ────────────────────────────────────────────────────────────
+RAW_DIR  = Path("data/raw")          # Bilder + Labels hier
+DATASET  = Path("datasets/bottles")  # Ausgabe
+SPLIT    = (0.70, 0.20, 0.10)        # train / val / test
+SEED     = 42
+CLASSES  = ["bottle_opening"]        # Klassen (1 reicht fürs Projekt)
+# ──────────────────────────────────────────────────────────────────────────────
+
+
+def write_data_yaml(dataset_path: Path, classes: list[str]) -> None:
+    """Schreibt die data.yaml, die YOLOv8 zum Training braucht."""
+    content = f"""# Smart Beverage Station – YOLOv8 Dataset
+path: {dataset_path.resolve()}
+train: train/images
+val:   val/images
+test:  test/images
+
+nc: {len(classes)}
+names: {classes}
+"""
+    (dataset_path / "data.yaml").write_text(content)
+    print(f"  ✓ data.yaml geschrieben → {dataset_path / 'data.yaml'}")
+
+
+def split_and_copy(raw_dir: Path, dataset: Path, split: tuple, seed: int) -> None:
+    """Liest gelabelte Bilder ein, mischelt, splittet und kopiert sie."""
+    all_images = sorted(raw_dir.glob("*.jpg"))
+
+    # Nur Bilder mit passender Label-Datei verwenden
+    labeled = [
+        img for img in all_images
+        if (raw_dir / f"{img.stem}.txt").exists()
+    ]
+
+    if not labeled:
+        raise FileNotFoundError(
+            f"\n✗  Keine gelabelten Bilder in '{raw_dir}' gefunden.\n"
+            "   Jedes Bild braucht eine gleichnamige .txt-Datei (YOLO-Format).\n"
+            "   → Bitte zuerst mit Roboflow.com labeln!"
+        )
+
+    random.seed(seed)
+    random.shuffle(labeled)
+
+    n       = len(labeled)
+    n_train = int(n * split[0])
+    n_val   = int(n * split[1])
+
+    splits = {
+        "train": labeled[:n_train],
+        "val":   labeled[n_train : n_train + n_val],
+        "test":  labeled[n_train + n_val :],
+    }
+
+    print(f"\n  Gesamt: {n} gelabelte Bilder")
+    for split_name, files in splits.items():
+        img_dir = dataset / split_name / "images"
+        lbl_dir = dataset / split_name / "labels"
+        img_dir.mkdir(parents=True, exist_ok=True)
+        lbl_dir.mkdir(parents=True, exist_ok=True)
+
+        for img_path in files:
+            lbl_path = raw_dir / f"{img_path.stem}.txt"
+            shutil.copy2(img_path, img_dir / img_path.name)
+            shutil.copy2(lbl_path, lbl_dir / f"{img_path.stem}.txt")
+
+        print(f"  {split_name:5s}: {len(files):3d} Bilder")
+
+
+if __name__ == "__main__":
+    print(f"[INFO] Verarbeite Dataset aus: {RAW_DIR}")
+    split_and_copy(RAW_DIR, DATASET, SPLIT, SEED)
+    write_data_yaml(DATASET, CLASSES)
+    print(f"\n✓  Dataset fertig unter: {DATASET}")
+    print(f"   Nächster Schritt: python 03_train.py")
+      </code></pre>
+    </div>
+  </section>
+
+  <!-- TRAINING -->
+  <section class="section" id="train">
+    <h2><span class="sec-num">07</span>Modul 03 – YOLOv8n Training</h2>
+    <div class="section-rule"></div>
+
+    <p>Trainiert ein <strong>YOLOv8n</strong>-Modell (Nano = kleinste Variante, schnellste Inferenz auf dem Pi). Muss auf dem <strong>PC mit RTX 4060</strong> ausgeführt werden – Training auf CPU dauert ca. 50× länger.</p>
+
+    <div class="grid-3">
+      <div class="card card-highlight"><div class="card-title" style="color:var(--blue)">⏱️ Trainingsdauer</div><div class="card-body">RTX 4060: ~15–30 Min für 100 Epochen bei 300 Bildern. CPU: mehrere Stunden.</div></div>
+      <div class="card"><div class="card-title">🎯 Ziel mAP50</div><div class="card-body">Anstreben: &gt; 0.85 mAP50. Mit 300+ Bildern und variiertem Labeling gut erreichbar.</div></div>
+      <div class="card"><div class="card-title">💡 Early Stopping</div><div class="card-body">Patience=20 Epochen stoppt das Training automatisch, wenn keine Verbesserung mehr messbar ist.</div></div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-filename">ai/<span class="ext">03_train.py</span></span>
+        <div class="code-actions"><button class="copy-btn" onclick="copyCode(this)">Kopieren</button></div>
+      </div>
+      <pre><code class="language-python">
+#!/usr/bin/env python3
+"""
+Smart Beverage Station — Schritt 3: YOLOv8n Training
+Trainiert das Flaschenerkenner-Modell. Auf PC mit GPU ausführen!
+
+  RTX 4060:  ~15-30 Minuten  ← empfohlen
+  CPU only:  mehrere Stunden  ← nicht empfohlen
+
+Voraussetzungen:
+  pip install ultralytics torch torchvision --index-url https://download.pytorch.org/whl/cu121
+"""
+from pathlib import Path
+from ultralytics import YOLO
+import torch
+
+
+# ─── Konfiguration ────────────────────────────────────────────────────────────
+MODEL       = "yolov8n.pt"                    # Nano = schnellste Pi-Inferenz
+DATA_YAML   = "datasets/bottles/data.yaml"
+PROJECT_DIR = "runs/train"
+RUN_NAME    = "sbs_bottle_v1"
+EPOCHS      = 100
+IMG_SIZE    = 640                             # Standard YOLO Input-Größe
+BATCH_SIZE  = 16                              # Für RTX 4060; bei 8 GB VRAM
+# ──────────────────────────────────────────────────────────────────────────────
+
+
+def main() -> str:
+    device = "0" if torch.cuda.is_available() else "cpu"
+    if device == "cpu":
+        print("⚠️  WARNUNG: Keine CUDA-GPU erkannt – Training auf CPU sehr langsam!")
+    else:
+        gpu = torch.cuda.get_device_name(0)
+        print(f"✓  GPU erkannt: {gpu}")
+
+    print(f"   Modell:  {MODEL}")
+    print(f"   Daten:   {DATA_YAML}")
+    print(f"   Epochen: {EPOCHS}  |  ImgSize: {IMG_SIZE}  |  Batch: {BATCH_SIZE}\n")
+
+    model   = YOLO(MODEL)
+    results = model.train(
+        data      = DATA_YAML,
+        epochs    = EPOCHS,
+        imgsz     = IMG_SIZE,
+        batch     = BATCH_SIZE,
+        project   = PROJECT_DIR,
+        name      = RUN_NAME,
+        device    = device,
+
+        # ── Daten-Augmentierung (verbessert Robustheit deutlich) ──
+        hsv_h     = 0.015,   # Farbton-Variation
+        hsv_s     = 0.7,     # Sättigungs-Variation
+        hsv_v     = 0.4,     # Helligkeits-Variation  ← wichtig für Licht-Variationen
+        degrees   = 10.0,    # Kleine Rotation (Flasche steht nie 100% gerade)
+        translate = 0.1,     # Leichte Verschiebung
+        scale     = 0.5,     # Zoomstufen-Variation
+        fliplr    = 0.5,     # Horizontales Spiegeln
+        mosaic    = 1.0,     # Mosaic-Augmentierung (4 Bilder kombiniert)
+
+        # ── Optimierung ──────────────────────────────────────────
+        optimizer = "AdamW",
+        lr0       = 0.001,
+        patience  = 20,      # Early Stopping nach 20 Epochen ohne Verbesserung
+        save      = True,
+        plots     = True,    # Trainings-Kurven als PNG speichern
+        verbose   = True,
+    )
+
+    # ── Ergebnisse ausgeben ───────────────────────────────────────────────────
+    best   = Path(PROJECT_DIR) / RUN_NAME / "weights" / "best.pt"
+    map50  = results.results_dict.get("metrics/mAP50(B)",    0.0)
+    map95  = results.results_dict.get("metrics/mAP50-95(B)", 0.0)
+    prec   = results.results_dict.get("metrics/precision(B)", 0.0)
+    recall = results.results_dict.get("metrics/recall(B)",    0.0)
+
+    print("\n" + "─" * 50)
+    print("✓  Training abgeschlossen!")
+    print(f"   mAP@50:    {map50:.3f}  (Ziel: > 0.850)")
+    print(f"   mAP@50-95: {map95:.3f}")
+    print(f"   Precision: {prec:.3f}")
+    print(f"   Recall:    {recall:.3f}")
+    print(f"\n   Bestes Modell: {best}")
+    print(f"\n   Nächster Schritt: python 04_export.py --model \"{best}\"")
+    print("─" * 50)
+
+    return str(best)
+
+
+if __name__ == "__main__":
+    best_model_path = main()
+      </code></pre>
+    </div>
+  </section>
+
+  <!-- EXPORT -->
+  <section class="section" id="export">
+    <h2><span class="sec-num">08</span>Modul 04 – Modell-Export für Raspberry Pi</h2>
+    <div class="section-rule"></div>
+
+    <p>Konvertiert das trainierte <code>.pt</code>-Modell in ein für den Pi optimiertes Format. <strong>ncnn</strong> ist auf dem Raspberry Pi 5 ARM Cortex-A76 deutlich schneller als ONNX.</p>
+
+    <div class="card card-highlight">
+      <div class="card-title">⚡ Warum ncnn?</div>
+      <div class="card-body">
+        ncnn ist ein auf ARM-CPUs spezialisiertes Inferenz-Framework (entwickelt von Tencent). Auf dem Pi 5 erreicht YOLOv8n mit ncnn ca. <strong>8–12 FPS</strong> – mit ONNX nur ~3–5 FPS. Die KI nutzt alle 4 Cortex-A76 Kerne optimal aus.
+      </div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-filename">ai/<span class="ext">04_export.py</span></span>
+        <div class="code-actions"><button class="copy-btn" onclick="copyCode(this)">Kopieren</button></div>
+      </div>
+      <pre><code class="language-python">
+#!/usr/bin/env python3
+"""
+Smart Beverage Station — Schritt 4: Modell für Raspberry Pi 5 exportieren
+
+Format-Vergleich (YOLOv8n, 640px, Pi 5):
+  .pt   (PyTorch)  → nur für Training, ~3 FPS auf Pi
+  .onnx (ONNX)     → ~4-5 FPS, universell
+  .ncnn (ncnn)     → ~8-12 FPS, ARM-optimiert  ← EMPFOHLEN
+
+Exportiert auf dem PC; das ncnn-Modell wird dann auf den Pi kopiert.
+"""
+import argparse
+import shutil
+from pathlib import Path
+from ultralytics import YOLO
+
+
+# ─── Konfiguration ────────────────────────────────────────────────────────────
+DEFAULT_MODEL  = "runs/train/sbs_bottle_v1/weights/best.pt"
+DEFAULT_FORMAT = "ncnn"
+DEFAULT_IMGSIZE = 640
+OUTPUT_DIR     = Path("models")
+# ──────────────────────────────────────────────────────────────────────────────
+
+
+def export_and_benchmark(model_path: str, fmt: str, imgsz: int) -> None:
+    """Exportiert das Modell und gibt Deployment-Infos aus."""
+    model_path = Path(model_path)
+    if not model_path.exists():
+        raise FileNotFoundError(f"Modell nicht gefunden: {model_path}")
+
+    print(f"[INFO] Exportiere: {model_path}")
+    print(f"[INFO] Format:     {fmt}")
+    print(f"[INFO] Bildgröße:  {imgsz}px\n")
+
+    model = YOLO(str(model_path))
+
+    if fmt == "ncnn":
+        # Optimal für Raspberry Pi 5 (ARM Cortex-A76, keine FP16 SIMD!)
+        exported_path = model.export(
+            format   = "ncnn",
+            imgsz    = imgsz,
+            half     = False,   # Pi 5 hat kein natives FP16 → False lassen!
+            optimize = True,    # ncnn-spezifische Optimierungen aktivieren
+        )
+    elif fmt == "onnx":
+        exported_path = model.export(
+            format   = "onnx",
+            imgsz    = imgsz,
+            opset    = 17,
+            simplify = True,    # Modellgraph vereinfachen (schneller)
+        )
+    else:
+        raise ValueError(f"Unbekanntes Format '{fmt}'. Wähle: ncnn | onnx")
+
+    # In models/-Ordner verschieben für bessere Übersicht
+    OUTPUT_DIR.mkdir(exist_ok=True)
+    dest = OUTPUT_DIR / Path(exported_path).name
+    if Path(exported_path).is_dir():
+        if dest.exists():
+            shutil.rmtree(dest)
+        shutil.copytree(exported_path, dest)
+    else:
+        shutil.copy2(exported_path, dest)
+
+    # Validierung auf Trainings-Dataset
+    val_results = model.val(data="datasets/bottles/data.yaml", verbose=False)
+    map50 = val_results.results_dict.get("metrics/mAP50(B)", 0.0)
+
+    print("\n" + "─" * 55)
+    print("✓  Export abgeschlossen!")
+    print(f"   Exportierter Pfad: {dest}")
+    print(f"   mAP50 (Validierung): {map50:.3f}")
+    print()
+    print("   Auf Pi kopieren (SSH/SCP):")
+    print(f'   scp -r "{dest}" pi@raspberrypi.local:~/sbs/ai/models/')
+    print()
+    print("   Dann auf dem Pi starten:")
+    print(f'   python3 05_inference.py --model "models/{dest.name}"')
+    print("─" * 55)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="YOLOv8-Modell für Pi exportieren")
+    parser.add_argument("--model",  default=DEFAULT_MODEL,
+                        help="Pfad zur best.pt Datei")
+    parser.add_argument("--format", default=DEFAULT_FORMAT,
+                        choices=["ncnn", "onnx"],
+                        help="Export-Format (default: ncnn)")
+    parser.add_argument("--imgsz",  type=int, default=DEFAULT_IMGSIZE,
+                        help="Eingabe-Bildgröße in Pixeln (default: 640)")
+    args = parser.parse_args()
+
+    export_and_benchmark(args.model, args.format, args.imgsz)
+      </code></pre>
+    </div>
+  </section>
+
+  <!-- INFERENCE -->
+  <section class="section" id="inference">
+    <h2><span class="sec-num">09</span>Modul 05 – Live-Inferenz auf dem Pi</h2>
+    <div class="section-rule"></div>
+
+    <p>Das Herzstück des Systems: Liest kontinuierlich die Pi Camera 3 aus, erkennt Flaschenöffnungen, rechnet Pixel in Millimeter um und sendet G-Code-Befehle an den ESP32.</p>
+
+    <div class="callout callout-warn">
+      <span class="callout-icon">⚠️</span>
+      <div><strong>Kalibrierung erforderlich!</strong> Die Konstante <code>PX_PER_MM</code> muss eingemessen werden. Flasche an bekannte Position stellen, messen wie viele Pixel einem Millimeter entsprechen, und den Wert anpassen.</div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-filename">ai/<span class="ext">05_inference.py</span></span>
+        <div class="code-actions"><button class="copy-btn" onclick="copyCode(this)">Kopieren</button></div>
+      </div>
+      <pre><code class="language-python">
+#!/usr/bin/env python3
+"""
+Smart Beverage Station — Schritt 5: Live-Inferenz auf dem Raspberry Pi 5
+
+Vollständiger Workflow:
+  1. Kamera-Frame aufnehmen
+  2. YOLOv8 erkennt Flaschenöffnung
+  3. Pixel-Koordinate → Millimeter-Offset berechnen
+  4. G-Code an ESP32 senden (USB-Serial)
+  5. Relais öffnet Ventil → Getränk fließt
+
+Läuft auf dem Raspberry Pi 5 mit picamera2 + ultralytics.
+"""
+import time
+import argparse
+import numpy as np
+import serial
+from picamera2 import Picamera2
+from ultralytics import YOLO
+
+
+# ─── Konfiguration (hier anpassen!) ───────────────────────────────────────────
+MODEL_PATH   = "models/sbs_bottle_v1_ncnn_model"  # ncnn-Ordner vom Pi
+SERIAL_PORT  = "/dev/ttyUSB0"   # ESP32 via USB (ggf. ttyACM0 testen)
+BAUD_RATE    = 115200
+CONF_THRESH  = 0.70             # Nur Erkennungen > 70% Konfidenz verwenden
+IMG_W, IMG_H = 1280, 720        # Kamera-Auflösung
+
+# !! KALIBRIERUNG: Diese Werte müssen eingemessen werden !!
+# Messe: Wie viele Pixel entsprechen 1 mm in X und Y?
+PX_PER_MM_X  = 4.2              # Pixel pro Millimeter in X-Richtung
+PX_PER_MM_Y  = 4.2              # Pixel pro Millimeter in Y-Richtung
+NOZZLE_PIX_X = IMG_W // 2       # Pixel-Position der Düse im Kamerabild (X)
+NOZZLE_PIX_Y = IMG_H // 2       # Pixel-Position der Düse im Kamerabild (Y)
+
+FILL_VOLUME_ML   = 250.0        # Standard-Füllmenge in ml
+PUMP_ML_PER_SEC  = 50.0         # Pumpen-Förderrate (ml/s) → einmessen!
+# ──────────────────────────────────────────────────────────────────────────────
+
+
+class BeverageStation:
+    """Orchestriert Kamera-Inferenz, Gantry-Bewegung und Befüllung."""
+
+    def __init__(self, model_path: str, port: str, baud: int) -> None:
+        print("[INIT] Lade YOLOv8-Modell ...")
+        self.model = YOLO(model_path, task="detect")
+
+        print("[INIT] Starte Pi Camera 3 ...")
+        self.cam = Picamera2()
+        cfg = self.cam.create_video_configuration(
+            main={"size": (IMG_W, IMG_H), "format": "RGB888"},
+            controls={"FrameRate": 30, "AwbEnable": True},
+        )
+        self.cam.configure(cfg)
+        self.cam.start()
+        time.sleep(1.5)
+
+        print(f"[INIT] Verbinde Serial {port} @ {baud} Baud ...")
+        self.ser = serial.Serial(port, baud, timeout=2)
+        time.sleep(2.5)          # ESP32 startet nach Reset-Puls
+
+        print("[INIT] Homing ...")
+        self._gcode("G28")       # Alle Achsen auf Nullpunkt fahren
+        print("[OK]  System bereit!\n")
+
+    def _gcode(self, cmd: str) -> str:
+        """Sende G-Code an ESP32, warte auf 'ok'-Antwort."""
+        self.ser.write((cmd.strip() + "\n").encode("utf-8"))
+        response = self.ser.readline().decode("utf-8", errors="replace").strip()
+        print(f"  ESP32 ← {cmd:30s}  → {response}")
+        return response
+
+    def pixel_to_mm(self, px: float, py: float) -> tuple[float, float]:
+        """Wandelt Pixel-Koordinate in Millimeter-Offset zur Düse um."""
+        dx = (px - NOZZLE_PIX_X) / PX_PER_MM_X
+        dy = (py - NOZZLE_PIX_Y) / PX_PER_MM_Y
+        return round(dx, 2), round(dy, 2)
+
+    def detect_bottle(self, frame: np.ndarray) -> dict | None:
+        """Führt YOLO-Inferenz durch. Gibt beste Detection zurück oder None."""
+        results = self.model(frame, conf=CONF_THRESH, verbose=False)
+        boxes   = results[0].boxes
+        if len(boxes) == 0:
+            return None
+
+        # Beste Detection = höchste Konfidenz
+        best_idx  = int(boxes.conf.argmax())
+        x1, y1, x2, y2 = boxes.xyxy[best_idx].tolist()
+        conf      = float(boxes.conf[best_idx])
+        center_x  = (x1 + x2) / 2.0
+        center_y  = (y1 + y2) / 2.0
+
+        return {
+            "cx":   center_x,
+            "cy":   center_y,
+            "conf": conf,
+            "bbox": (x1, y1, x2, y2),
+        }
+
+    def fill(self, detection: dict, volume_ml: float = FILL_VOLUME_ML) -> None:
+        """Fährt zur Flaschenöffnung und dosiert das Getränk."""
+        dx_mm, dy_mm = self.pixel_to_mm(detection["cx"], detection["cy"])
+
+        print(f"\n[FÜLLEN] Flasche erkannt   conf={detection['conf']:.2f}")
+        print(f"         Offset:  Δx={dx_mm:+.1f} mm   Δy={dy_mm:+.1f} mm")
+
+        # Gantry positionieren
+        self._gcode("G91")                              # Relative Koordinaten
+        self._gcode(f"G1 X{dx_mm} Y{dy_mm} F3000")     # Zur Öffnung fahren
+        self._gcode("G90")                              # Zurück zu absolut
+        time.sleep(0.2)                                 # Einschwingen lassen
+
+        # Pumpe aktivieren (Custom G-Code M800 = Pumpe an für N ms)
+        pump_ms = int((volume_ml / PUMP_ML_PER_SEC) * 1000)
+        self._gcode(f"M800 T{pump_ms}")                 # Pumpe EIN
+        time.sleep(pump_ms / 1000.0 + 0.3)             # Warten + kleiner Puffer
+        self._gcode("M801")                             # Pumpe AUS
+
+        print(f"         {volume_ml:.0f} ml dosiert.")
+
+        # Zurück zur Ausgangsposition (Homing)
+        self._gcode("G28")
+
+    def run(self) -> None:
+        """Haupt-Loop: wartet auf Flasche und befüllt automatisch."""
+        print("[RUN] Warte auf Flasche ...  (Ctrl+C zum Beenden)\n")
+        try:
+            while True:
+                frame     = self.cam.capture_array()
+                detection = self.detect_bottle(frame)
+
+                if detection:
+                    self.fill(detection)
+                    time.sleep(3.0)   # Kurze Pause nach Befüllung
+                else:
+                    time.sleep(0.02)  # ~50 Hz Polling ohne Detection
+
+        except KeyboardInterrupt:
+            print("\n[STOP] Herunterfahren ...")
+        finally:
+            self.cam.stop()
+            self.ser.close()
+            print("[OK]  Verbindungen geschlossen.")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Smart Beverage Station – Live-Inferenz")
+    parser.add_argument("--model",  default=MODEL_PATH,  help="Pfad zum ncnn-Modell-Ordner")
+    parser.add_argument("--port",   default=SERIAL_PORT, help="Serial-Port des ESP32")
+    parser.add_argument("--volume", type=float, default=FILL_VOLUME_ML, help="Füllmenge in ml")
+    args = parser.parse_args()
+
+    station = BeverageStation(args.model, args.port, BAUD_RATE)
+    station.run()
+      </code></pre>
+    </div>
+  </section>
+
+  <!-- GANTRY -->
+  <section class="section" id="gantry">
+    <h2><span class="sec-num">10</span>X/Y-Gantry – Aufbau</h2>
+    <div class="section-rule"></div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-body">
+          <div class="step-title">V-Slot-Profile schneiden &amp; verbinden</div>
+          <div class="step-desc">2× X-Achse, 1× Y-Achse aus 2020er Aluprofil. Eckenverbinder / 3D-gedruckte Halter. Stabile Basis: 2 Querstreben als Tischauflage.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-body">
+          <div class="step-title">Führungsrollen montieren</div>
+          <div class="step-desc">Dual V-Slot Rollen auf dem Toolhead-Schlitten. Exzenter-Muttern für spielfreies Spiel einstellen. Ziel: kein Wackeln, aber leichtes Gleiten.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-body">
+          <div class="step-title">GT2-Riemen spannen</div>
+          <div class="step-desc">NEMA 17 Motorhalter an den Profilen befestigen. GT2 Zahnriemen über Umlenkrolle führen. Riemenspanner einstellen – der Riemen sollte beim Zupfen kurz schwingen.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-body">
+          <div class="step-title">TMC2209 verdrahten</div>
+          <div class="step-desc">UART-Modus: PDN_UART-Pin des TMC2209 via 1 kΩ an TX-Pin des ESP32. VCC: 12 V (Motorspannung), VM: 5 V (Logik). Vref-Strom auf ~0,8 A für NEMA 17 einstellen.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-body">
+          <div class="step-title">Sensorless Homing testen</div>
+          <div class="step-desc">StallGuard-Schwelle per SGTHRS-Register einstellen. ESP32-Firmware: bei StallGuard-Interrupt sofort stoppen. Vorsichtig mit niedriger Geschwindigkeit homen.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLUIDIK -->
+  <section class="section" id="fluidik">
+    <h2><span class="sec-num">11</span>Fluidik-System</h2>
+    <div class="section-rule"></div>
+
+    <div class="arch-grid">
+      <div class="card" style="border-left:3px solid var(--blue)">
+        <div class="card-title">💧 Kanal 1: Kaltwasser</div>
+        <div class="card-body">Mini-Kühlschrank → 12 V Membranpumpe (VEVOR) → Schlauch → Toolhead-Düse. Relais schaltet Pumpe. VL53L0X misst Füllstand im Tank.</div>
+      </div>
+      <div class="card" style="border-left:3px solid #A0C0E0">
+        <div class="card-title">🫧 Kanal 2: Sprudel</div>
+        <div class="card-body">19 L NC-Keg + CO₂ → Ball-Lock-Anschluss → VEVOR-Pumpe → Düse. CO₂-Druck: ~1 bar. Keg im Kühlschrank lagern für beste Karbonisierung.</div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--orange)">
+        <div class="card-title">🔥 Kanal 3: Heißwasser</div>
+        <div class="card-body">CASO HW 660 gehackt: interner Taster via Relais überbrückt (220 V!). Magnetventil DN15 gibt Wasser frei. <strong>Nur von Erwachsenen modifizieren!</strong></div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--green)">
+        <div class="card-title">🍹 Kanal 4: Sirup</div>
+        <div class="card-body">12 V Peristaltikpumpe dosiert präzise. Förderrate ~2 ml/s bei 12 V. Kalibrierung: Pumpe 5 s laufen lassen und ml messen → Faktor berechnen.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAFETY -->
+  <section class="section" id="safety">
+    <h2><span class="sec-num">12</span>Sicherheitskonzept</h2>
+    <div class="section-rule"></div>
+
+    <div class="callout callout-warn">
+      <span class="callout-icon">⚠️</span>
+      <div><strong>230 V AC im System!</strong> Der Heißwasserspender und das Magnetventil arbeiten mit Netzspannung. Diese Teile dürfen nur von Erwachsenen modifiziert und verdrahtet werden. Im Schulprojekt immer unter Aufsicht einer Lehrkraft!</div>
+    </div>
+
+    <ul class="safety-list">
+      <li><span class="s-icon">🛑</span><div><strong>Hardware-Notstopp:</strong> VL53L0X am Toolhead misst Wasserstand mit 50 Hz. Unterschreitet der Abstand 3 cm (= fast leer / Fehler), löst ein Hardware-Interrupt direkt am ESP32 aus und schaltet alle Relais aus – unabhängig vom Raspberry Pi.</div></li>
+      <li><span class="s-icon">🔌</span><div><strong>Galvanische Trennung:</strong> Das 8-Kanal-Relaismodul hat eingebaute Optokoppler-Isolation. 5 V Logik und 12/220 V Lastkreis sind komplett getrennt.</div></li>
+      <li><span class="s-icon">💧</span><div><strong>Wasserspritzschutz:</strong> Alle Elektronik-Komponenten sind mindestens 20 cm über Wasserkontakthöhe montiert. Kabelkanäle mit Gefälle nach außen.</div></li>
+      <li><span class="s-icon">🌡️</span><div><strong>Heißwasser-Sicherung:</strong> Der CASO HW 660 hat seinen eigenen Thermal-Cutoff. Das Magnetventil (220 V, normal-geschlossen) schließt bei Stromausfall automatisch.</div></li>
+      <li><span class="s-icon">🔧</span><div><strong>Sensorless Homing Limits:</strong> Im ESP32-Firmware sind Software-Endstops gesetzt. Die Gantry kann nicht über die physikalischen Grenzen hinausfahren, auch wenn der Nullpunkt falsch ist.</div></li>
+      <li><span class="s-icon">📋</span><div><strong>Jugend forscht Präsentation:</strong> Demo läuft immer mit einer Erwachsenen-Aufsicht. Der 230-V-Teil wird im Ausstellungsbetrieb entkoppelt (separater Schalter).</div></li>
+    </ul>
+  </section>
+
+  <!-- ESP32 -->
+  <section class="section" id="esp32">
+    <h2><span class="sec-num">13</span>ESP32 Firmware – Grundgerüst</h2>
+    <div class="section-rule"></div>
+
+    <p>Der ESP32 empfängt G-Code via USB-Serial und steuert die Stepper-Motoren. Hier ist der relevante C++-Code für TMC2209 UART und StallGuard-Homing.</p>
+
+    <div class="callout callout-info">
+      <span class="callout-icon">ℹ️</span>
+      <div>Bibliotheken: <code>AccelStepper</code>, <code>TMCStepper</code>, <code>Adafruit_VL53L0X</code>. Alle via Arduino Library Manager installierbar.</div>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-filename">esp32/firmware/<span class="ext">main.cpp</span></span>
+        <div class="code-actions"><button class="copy-btn" onclick="copyCode(this)">Kopieren</button></div>
+      </div>
+      <pre><code class="language-cpp">
+// Smart Beverage Station — ESP32 Firmware
+// Bibliotheken: AccelStepper, TMCStepper, Adafruit_VL53L0X
+// IDE: Arduino IDE oder PlatformIO
+
+#include &lt;Arduino.h&gt;
+#include &lt;AccelStepper.h&gt;
+#include &lt;TMCStepper.h&gt;
+#include &lt;Wire.h&gt;
+#include "Adafruit_VL53L0X.h"
+
+// ─── Pin-Definitionen ─────────────────────────────────────────────────────
+#define X_STEP_PIN    14   // NEMA 17 X-Achse
+#define X_DIR_PIN     27
+#define X_EN_PIN      26
+#define Y_STEP_PIN    25
+#define Y_DIR_PIN     33
+#define Y_EN_PIN      32
+
+#define TMC_SERIAL    Serial2   // UART für TMC2209
+#define TMC_RX        16
+#define TMC_TX        17
+#define R_SENSE       0.11f    // Shunt-Widerstand des TMC2209
+
+#define RELAY_PIN_0   4        // Relais 1–4 (Kaltwasser, Sprudel, Heißwasser, Sirup)
+#define RELAY_PIN_1   5
+#define RELAY_PIN_2   18
+#define RELAY_PIN_3   19
+
+#define WATER_SENSOR_INTERRUPT 23  // Hardware-Interrupt von VL53L0X
+#define WATER_THRESHOLD_MM     30  // Notstopp unter 30 mm Abstand
+
+// ─── Globale Objekte ───────────────────────────────────────────────────────
+AccelStepper stepperX(AccelStepper::DRIVER, X_STEP_PIN, X_DIR_PIN);
+AccelStepper stepperY(AccelStepper::DRIVER, Y_STEP_PIN, Y_DIR_PIN);
+TMC2209Stepper driverX(&amp;TMC_SERIAL, R_SENSE, 0b00);  // ADDR=0
+TMC2209Stepper driverY(&amp;TMC_SERIAL, R_SENSE, 0b01);  // ADDR=1
+Adafruit_VL53L0X lox;
+
+volatile bool emergencyStop = false;
+String gCodeBuffer = "";
+
+// ─── Notstopp ISR ─────────────────────────────────────────────────────────
+void IRAM_ATTR onWaterLow() {
+  emergencyStop = true;  // Im ISR nur Flag setzen!
+}
+
+// ─── TMC2209 Initialisierung ───────────────────────────────────────────────
+void initDrivers() {
+  TMC_SERIAL.begin(115200, SERIAL_8N1, TMC_RX, TMC_TX);
+
+  for (auto* d : {&amp;driverX, &amp;driverY}) {
+    d-&gt;begin();
+    d-&gt;toff(4);           // Treiber aktivieren
+    d-&gt;blank_time(24);
+    d-&gt;rms_current(800);  // 800 mA RMS für NEMA 17
+    d-&gt;microsteps(16);    // 16 Mikroschritt
+    d-&gt;en_spreadCycle(false); // StealthChop aktivieren (leiser)
+    d-&gt;SGTHRS(100);       // StallGuard-Schwelle (0-255, höher = empfindlicher)
+  }
+}
+
+// ─── Sensorless Homing ────────────────────────────────────────────────────
+void homeAxis(AccelStepper&amp; stepper, int enPin, TMC2209Stepper&amp; driver) {
+  digitalWrite(enPin, LOW);
+  stepper.setMaxSpeed(200);   // Langsam homen!
+  stepper.setAcceleration(100);
+  stepper.move(-10000);       // Fahre Richtung Endstop
+
+  while (stepper.isRunning()) {
+    stepper.run();
+    if (driver.SG_RESULT() &lt; 50) {  // StallGuard ausgelöst = Endstop erreicht
+      stepper.stop();
+      stepper.setCurrentPosition(0);
+      break;
+    }
+  }
+  stepper.setMaxSpeed(1000);
+  stepper.setAcceleration(500);
+}
+
+// ─── G-Code Parser ────────────────────────────────────────────────────────
+void parseGCode(String line) {
+  line.trim();
+  if (line.length() == 0 || line[0] == ';') return;
+
+  if (line.startsWith("G28")) {          // Homing
+    homeAxis(stepperX, X_EN_PIN, driverX);
+    homeAxis(stepperY, Y_EN_PIN, driverY);
+
+  } else if (line.startsWith("G1")) {    // Lineare Bewegung
+    float x = 0, y = 0, f = 1000;
+    sscanf(line.c_str(), "G1 X%f Y%f F%f", &amp;x, &amp;y, &amp;f);
+    stepperX.moveTo((long)(x * 80));     // 80 Steps/mm bei 16 Mikro + GT2
+    stepperY.moveTo((long)(y * 80));
+    stepperX.setMaxSpeed(f);
+    stepperY.setMaxSpeed(f);
+
+  } else if (line.startsWith("M800")) {  // Custom: Pumpe AN für T ms
+    int t = 0;
+    sscanf(line.c_str(), "M800 T%d", &amp;t);
+    digitalWrite(RELAY_PIN_0, HIGH);
+    delay(t);
+    digitalWrite(RELAY_PIN_0, LOW);
+
+  } else if (line.startsWith("M801")) {  // Custom: Pumpe AUS
+    digitalWrite(RELAY_PIN_0, LOW);
+  }
+
+  Serial.println("ok");  // Bestätigung an Raspberry Pi
+}
+
+// ─── Setup ────────────────────────────────────────────────────────────────
+void setup() {
+  Serial.begin(115200);
+  Wire.begin();
+
+  // Relais-Pins
+  for (int pin : {RELAY_PIN_0, RELAY_PIN_1, RELAY_PIN_2, RELAY_PIN_3}) {
+    pinMode(pin, OUTPUT);
+    digitalWrite(pin, LOW);
+  }
+
+  // Stepper Enable-Pins
+  pinMode(X_EN_PIN, OUTPUT); digitalWrite(X_EN_PIN, HIGH);  // Erst deaktiviert
+  pinMode(Y_EN_PIN, OUTPUT); digitalWrite(Y_EN_PIN, HIGH);
+
+  // TMC2209 Treiber
+  initDrivers();
+
+  // VL53L0X Laser-Sensor
+  if (!lox.begin()) {
+    Serial.println("[ERROR] VL53L0X nicht gefunden!");
+  }
+
+  // Hardware-Interrupt für Notstopp
+  pinMode(WATER_SENSOR_INTERRUPT, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(WATER_SENSOR_INTERRUPT),
+                  onWaterLow, FALLING);
+
+  Serial.println("[OK] Smart Beverage Station bereit.");
+}
+
+// ─── Loop ─────────────────────────────────────────────────────────────────
+void loop() {
+  // Notstopp überprüfen
+  if (emergencyStop) {
+    stepperX.stop();
+    stepperY.stop();
+    for (int pin : {RELAY_PIN_0, RELAY_PIN_1, RELAY_PIN_2, RELAY_PIN_3})
+      digitalWrite(pin, LOW);
+    Serial.println("[EMERGENCY] Notstopp ausgelöst! Wasserstand kritisch.");
+    while (true) delay(1000);  // Halte an bis Reset
+  }
+
+  // G-Code einlesen
+  while (Serial.available()) {
+    char c = Serial.read();
+    if (c == '\n') {
+      parseGCode(gCodeBuffer);
+      gCodeBuffer = "";
+    } else {
+      gCodeBuffer += c;
+    }
+  }
+
+  // Stepper laufen lassen
+  stepperX.run();
+  stepperY.run();
+}
+      </code></pre>
+    </div>
+
+    <footer>
+      <span>Smart Beverage Station · Jugend forscht 2025/26 · CBG Dülmen</span>
+      <span>YOLOv8 · ESP32 · Raspberry Pi 5 · Python</span>
+    </footer>
+
+  </section>
+
+</main>
+</div>
+
+<script>
+// Highlight.js initialisieren
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("pre code").forEach(block => {
+    hljs.highlightElement(block);
+  });
+});
+
+// Kopier-Buttons
+function copyCode(btn) {
+  const pre = btn.closest(".code-block").querySelector("pre code");
+  navigator.clipboard.writeText(pre.innerText.trim()).then(() => {
+    btn.textContent = "Kopiert ✓";
+    btn.classList.add("copied");
+    setTimeout(() => { btn.textContent = "Kopieren"; btn.classList.remove("copied"); }, 2000);
+  });
+}
+
+// Aktiven Nav-Link highlighten
+const sections = document.querySelectorAll(".section, .hero");
+const navLinks  = document.querySelectorAll(".nav-link");
+const observer  = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove("active"));
+      const link = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+      if (link) link.classList.add("active");
+    }
+  });
+}, { rootMargin: "-30% 0px -60% 0px" });
+sections.forEach(s => observer.observe(s));
+</script>
 </body>
 </html>
