@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Beverage Station | Jugend forscht</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        body { padding-top: 2rem; }
+        .component-list li { margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <hgroup>
+            <h1>Smart Beverage Station</h1>
+            <h2>Jugend forscht Projekt Dokumentation</h2>
+        </hgroup>
+
+        <section>
+            <h3>Über das Projekt</h3>
+            <p>Ein DIY-Getränkeroboter, der Sensor-Fusion (Vision AI + Laser) und ein Custom X/Y-Gantry-System nutzt, um Flaschen automatisch mit gekühltem Wasser, Sprudel, Heißwasser oder Sirup zu befüllen.</p>
+        </section>
+
+        <section>
+            <h3>Code & PDF-Generator</h3>
+            <p>Das Repository enthält ein Python-Skript (<code>generate_pdf.py</code>), welches die komplette Teileliste und Anleitung als PDF generiert. So führst du es lokal aus:</p>
+            <pre><code>pip install -r requirements.txt
+python generate_pdf.py</code></pre>
+        </section>
+
+        <section>
+            <h3>Komponentenliste</h3>
+            <ul class="component-list">
+                <li><b>Display:</b> <a href="https://eckstein-shop.de/... " target="_blank">WaveShare 7" QLED Touch</a></li>
+                <li><b>High-Level Brain:</b> <a href="https://www.berrybase.de/..." target="_blank">Raspberry Pi 5 Starterkit</a></li>
+                <li><b>Low-Level Controller:</b> <a href="https://www.az-delivery.de/..." target="_blank">ESP32 NodeMCU</a></li>
+                <li><b>Kinematik:</b> <a href="https://www.onbuy.com/..." target="_blank">NEMA17 Schrittmotoren</a> & <a href="https://www.roboter-bausatz.de/..." target="_blank">TMC2209 Treiber</a></li>
+                <li><b>Sensorik:</b> <a href="https://www.berrybase.de/..." target="_blank">Kamera Modul 3</a> & <a href="https://www.amazon.de/..." target="_blank">VL53L0X Laser</a></li>
+                <li><b>Fluidik:</b> <a href="https://www.braupartner.de/..." target="_blank">NC Keg</a>, <a href="https://www.amazon.de/..." target="_blank">Peristaltikpumpe</a>, etc.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Schritt-für-Schritt-Anleitung</h3>
+            <ol>
+                <li>Rahmen aus V-Slot-Profilen bauen.</li>
+                <li>Rollen, Riemen und Motoren montieren.</li>
+                <li>TMC2209 und ESP32 verdrahten.</li>
+                <li>Raspberry Pi und Display einrichten.</li>
+                <li>Kamera montieren und kalibrieren.</li>
+                <li>VL53L0X in den Werkzeugkopf einbauen.</li>
+                <li>Relais und Netzteile anschließen.</li>
+                <li>Kaltwasser- & Sprudelsystem aufbauen.</li>
+                <li>Heißwasser- & Sirupsystem integrieren.</li>
+                <li>ESP32 (C++) programmieren.</li>
+                <li>Raspberry-Pi-Software (Python) entwickeln.</li>
+                <li>YOLOv8 trainieren.</li>
+                <li>Sensor-Fusion testen & System kalibrieren.</li>
+            </ol>
+        </section>
+    </main>
+</body>
+</html>
